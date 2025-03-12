@@ -66,8 +66,6 @@ public class UsuarioController {
 
     }
 
-
-
     // atualização de usuario
 
     @PutMapping("/{id}")
@@ -88,8 +86,6 @@ public class UsuarioController {
 
         return ResponseEntity.ok(usuario);
 
-
-        
     }
 
     // deleção de usuario

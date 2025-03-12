@@ -38,8 +38,7 @@ public class Livro {
     public Livro() {
     }
     
-    public Livro(UUID id, String titulo, String autor, String genero, String editora, int anoPublicacao, String isbn,
-            String status) {
+    public Livro(UUID id, String titulo, String autor, String genero, String editora, int anoPublicacao, String isbn, String status) {
         this.id = id;
         this.titulo = titulo;
         this.autor = autor;
