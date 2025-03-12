@@ -1,7 +1,5 @@
 package br.com.biblioteca.domain.usuario;
 
-import java.util.UUID;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -12,8 +10,8 @@ import jakarta.persistence.Id;
 public class Usuario {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @Column(nullable = false)
     
@@ -25,7 +23,7 @@ public class Usuario {
     public Usuario() {
     }
 
-    public Usuario(UUID id, String nome, String email) {
+    public Usuario(Long id, String nome, String email) {
         this.id = id;
         this.nome = nome;
         this.email = email;
@@ -36,11 +34,11 @@ public class Usuario {
         this.email = usuarioDto.email();
     }
 
-    public UUID getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

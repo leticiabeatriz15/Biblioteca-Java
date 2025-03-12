@@ -1,7 +1,5 @@
 package br.com.biblioteca.domain.livro;
 
-import java.util.UUID;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -38,7 +36,7 @@ public class Livro {
     public Livro() {
     }
     
-    public Livro(UUID id, String titulo, String autor, String genero, String editora, int anoPublicacao, String isbn, String status) {
+    public Livro(Long id, String titulo, String autor, String genero, String editora, int anoPublicacao, String isbn, String status) {
         this.id = id;
         this.titulo = titulo;
         this.autor = autor;
@@ -49,11 +47,11 @@ public class Livro {
         this.status = status;
     }
 
-    public UUID getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
