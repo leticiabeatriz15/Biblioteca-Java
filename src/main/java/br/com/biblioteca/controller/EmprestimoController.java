@@ -48,7 +48,7 @@ public class EmprestimoController {
     public ResponseEntity<Emprestimo> criarEmprestimo(@RequestBody @Valid EmprestimoDto dados){
         Emprestimo emprestimo = new Emprestimo(dados);
 
-        emprestimo = emprestimoRepository.save(emprestimo);
+        emprestimoRepository.save(emprestimo);
 
         return ResponseEntity.ok(emprestimo);
     }

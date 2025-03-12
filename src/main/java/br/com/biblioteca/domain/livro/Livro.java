@@ -47,6 +47,16 @@ public class Livro {
         this.status = status;
     }
 
+    public Livro(LivroDto livroDto) {
+        this.titulo = livroDto.titulo();
+        this.autor = livroDto.autor();
+        this.genero = livroDto.genero();
+        this.editora = livroDto.editora();
+        this.anoPublicacao = livroDto.anoPublicacao();
+        this.isbn = livroDto.isbn();
+        this.status = livroDto.status();
+    }
+
     public Long getId() {
         return id;
     }

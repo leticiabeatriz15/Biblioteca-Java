@@ -40,8 +40,8 @@ public class LivroController {
     @PostMapping
 
     public ResponseEntity<Livro> criarLivro(@RequestBody @Valid LivroDto dados) {
-        Livro livro = new Livro();
-        livro = livroRepository.save(livro);
+        Livro livro = new Livro(dados);
+        livroRepository.save(livro);
 
         return ResponseEntity.ok(livro);
     }

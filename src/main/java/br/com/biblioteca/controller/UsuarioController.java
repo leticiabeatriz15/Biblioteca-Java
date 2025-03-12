@@ -33,7 +33,7 @@ public class UsuarioController {
 
     public ResponseEntity<Usuario> criarUsuario(@RequestBody @Valid UsuarioDto dados) {
         Usuario usuario = new Usuario(dados);
-        usuario = usuarioRepository.save(usuario);
+        usuarioRepository.save(usuario);
 
         return ResponseEntity.ok(usuario);
 
