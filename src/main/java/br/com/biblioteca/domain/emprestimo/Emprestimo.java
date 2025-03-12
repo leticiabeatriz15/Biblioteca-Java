@@ -28,6 +28,13 @@ public class Emprestimo {
         
     }
 
+    public Emprestimo(EmprestimoDto emprestimoDto) {
+        this.dataEmprestimo = emprestimoDto.dataEmprestimo();
+        this.dataDevolucao = emprestimoDto.dataDevolucao();
+        this.usuario = emprestimoDto.usuario();
+        this.livro = emprestimoDto.livro();
+    }
+
     public Emprestimo(Usuario usuario, Livro livro, Long id, LocalDate dataEmprestimo, LocalDate dataDevolucao) {
         this.usuario = usuario;
         this.livro = livro;

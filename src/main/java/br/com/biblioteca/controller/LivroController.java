@@ -1,7 +1,6 @@
 package br.com.biblioteca.controller;
 
 import java.util.List;
-import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -57,7 +56,7 @@ public class LivroController {
 
     @GetMapping("/{id}")
 
-    public ResponseEntity<Livro> buscarLivroPorId(@PathVariable UUID id){
+    public ResponseEntity<Livro> buscarLivroPorId(@PathVariable Long id){
 
         Livro livro = this.livroRepository.findById(id).orElse(null);
 
@@ -71,7 +70,7 @@ public class LivroController {
 
     @PutMapping
 
-    public ResponseEntity<Livro> atualizarLivro(@PathVariable UUID id, @RequestBody LivroDto dados){
+    public ResponseEntity<Livro> atualizarLivro(@PathVariable Long id, @RequestBody LivroDto dados){
         Livro livro = this.livroRepository.findById(id).orElse(null);
 
         if (livro == null) {
@@ -93,7 +92,7 @@ public class LivroController {
 
     @DeleteMapping("/{id}")
 
-    public ResponseEntity<String> deletarLivro(@PathVariable UUID id) {
+    public ResponseEntity<String> deletarLivro(@PathVariable Long id) {
         Livro livro = this.livroRepository.findById(id).orElse(null);
 
         if(livro == null){

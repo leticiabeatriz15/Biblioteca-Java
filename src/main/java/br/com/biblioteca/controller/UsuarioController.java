@@ -1,7 +1,6 @@
 package br.com.biblioteca.controller;
 
 import java.util.List;
-import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -53,7 +52,7 @@ public class UsuarioController {
 
     @GetMapping("/{id}")
 
-    public ResponseEntity<Usuario> buscarUsuarioPorId(@PathVariable UUID id) {
+    public ResponseEntity<Usuario> buscarUsuarioPorId(@PathVariable Long id) {
 
         Usuario usuario = this.usuarioRepository.findById(id).orElse(null);
 
@@ -70,7 +69,7 @@ public class UsuarioController {
 
     @PutMapping("/{id}")
 
-    public ResponseEntity<Usuario> atualizarUsuario(@PathVariable UUID id, @RequestBody UsuarioDto dados){
+    public ResponseEntity<Usuario> atualizarUsuario(@PathVariable Long id, @RequestBody UsuarioDto dados){
 
         Usuario usuario = this.usuarioRepository.findById(id).orElse(null);
 
@@ -92,7 +91,7 @@ public class UsuarioController {
 
     @DeleteMapping("/{id}")
 
-    public ResponseEntity<String> deletarUsuario(@PathVariable UUID id){
+    public ResponseEntity<String> deletarUsuario(@PathVariable Long id){
 
         Usuario usuario = this.usuarioRepository.findById(id).orElse(null);
 
