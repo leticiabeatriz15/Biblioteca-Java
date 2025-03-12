@@ -29,11 +29,11 @@ public class Emprestimo {
     }
 
     public Emprestimo(Usuario usuario, Livro livro, Long id, LocalDate dataEmprestimo, LocalDate dataDevolucao) {
+        this.usuario = usuario;
+        this.livro = livro;
         this.id = id;
         this.dataEmprestimo = dataEmprestimo;
         this.dataDevolucao = dataDevolucao;
-        this.usuario = usuario;
-        this.livro = livro;
     }
 
     public Long getId() {
