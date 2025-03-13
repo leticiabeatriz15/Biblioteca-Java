@@ -4,21 +4,19 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.service.annotation.DeleteExchange;
-import br.com.biblioteca.BibliotecaApplication;
-import br.com.biblioteca.domain.livro.Livro;
-import br.com.biblioteca.domain.livro.LivroDto;
-import br.com.biblioteca.domain.livro.LivroRepository;
-import jakarta.validation.Valid;
-
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import br.com.biblioteca.BibliotecaApplication;
+import br.com.biblioteca.domain.livro.Livro;
+import br.com.biblioteca.service.LivroService;
+import jakarta.validation.Valid;
 
 
 @RestController
@@ -29,8 +27,9 @@ public class LivroController {
     private final UsuarioController usuarioController;
 
     private final BibliotecaApplication bibliotecaApplication;
+
     @Autowired
-    private LivroRepository livroRepository;
+    private LivroService livroService;
 
     LivroController(BibliotecaApplication bibliotecaApplication, UsuarioController usuarioController) {
         this.bibliotecaApplication = bibliotecaApplication;
@@ -39,17 +38,17 @@ public class LivroController {
 
     @PostMapping
 
-    public ResponseEntity<Livro> criarLivro(@RequestBody @Valid LivroDto dados) {
-        Livro livro = new Livro(dados);
-        livroRepository.save(livro);
+    public ResponseEntity<Livro> criarLivro(@RequestBody @Valid Livro livro ) {
+       
+        Livro livroSalvo = livroService.adicionarLivro(livro);
 
-        return ResponseEntity.ok(livro);
+        return ResponseEntity.ok(livroSalvo);
     }
     
     @GetMapping
 
     public ResponseEntity <List<Livro>> buscarLivros() {
-        List<Livro> livros = this.livroRepository.findAll();
+        List<Livro> livros = livroService.buscarLivros();
 
         return ResponseEntity.ok(livros);
     }
@@ -58,34 +57,17 @@ public class LivroController {
 
     public ResponseEntity<Livro> buscarLivroPorId(@PathVariable Long id){
 
-        Livro livro = this.livroRepository.findById(id).orElse(null);
-
-        if(livro == null){
-            return ResponseEntity.notFound().build();
-        }
+        Livro livro = livroService.buscarLivroPorId(id);
 
         return ResponseEntity.ok(livro);
         
     }
 
-    @PutMapping
+    @PutMapping("/{id}")
 
-    public ResponseEntity<Livro> atualizarLivro(@PathVariable Long id, @RequestBody LivroDto dados){
-        Livro livro = this.livroRepository.findById(id).orElse(null);
+    public ResponseEntity<Livro> atualizarLivro(@PathVariable Long id, @RequestBody @Valid Livro livroAtualizado){
 
-        if (livro == null) {
-            return ResponseEntity.notFound().build();
-        }
-
-        livro.setTitulo(dados.titulo());
-        livro.setAutor(dados.autor());
-        livro.setGenero(dados.genero());
-        livro.setEditora(dados.genero());
-        livro.setAnoPublicacao(dados.anoPublicacao());
-        livro.setIsbn(dados.isbn());
-        livro.setStatus(dados.status());
-
-        this.livroRepository.save(livro);
+        Livro livro = livroService.atualizarLivro(id, livroAtualizado);
 
         return ResponseEntity.ok(livro);
     }
@@ -93,14 +75,10 @@ public class LivroController {
     @DeleteMapping("/{id}")
 
     public ResponseEntity<String> deletarLivro(@PathVariable Long id) {
-        Livro livro = this.livroRepository.findById(id).orElse(null);
 
-        if(livro == null){
-            return ResponseEntity.notFound().build();
-        }
+        livroService.deletarLivro(id);
 
-        this.livroRepository.delete(livro);
+        return ResponseEntity.ok("Livro deletado com sucesso!");
         
-        return ResponseEntity.ok("Livro" + " " + livro.getTitulo() + " " + "deletado com sucesso!");
     }
 }
