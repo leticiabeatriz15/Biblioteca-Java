@@ -7,6 +7,7 @@ import br.com.biblioteca.domain.emprestimo.EmprestimoRepository;
 import br.com.biblioteca.domain.livro.Livro;
 import br.com.biblioteca.domain.livro.LivroDto;
 import br.com.biblioteca.domain.livro.LivroRepository;
+import br.com.biblioteca.service.EmprestimoService;
 import jakarta.validation.Valid;
 
 import java.util.List;
@@ -36,6 +37,9 @@ public class EmprestimoController {
     private final BibliotecaApplication bibliotecaApplication;
 
     @Autowired
+    private EmprestimoService emprestimoService;
+
+    @Autowired
     private EmprestimoRepository emprestimoRepository;
 
     EmprestimoController(BibliotecaApplication bibliotecaApplication, LivroController livroController, LivroRepository livroRepository) {
@@ -45,17 +49,17 @@ public class EmprestimoController {
     }
 
     @PostMapping
-    public ResponseEntity<Emprestimo> criarEmprestimo(@RequestBody @Valid EmprestimoDto dados){
-        Emprestimo emprestimo = new Emprestimo(dados);
+    public ResponseEntity<Emprestimo> criarEmprestimo(@RequestBody @Valid Emprestimo emprestimo){
 
-        emprestimoRepository.save(emprestimo);
+        Emprestimo emprestimoRealizado = emprestimoService.registrarEmprestimo(emprestimo);
 
-        return ResponseEntity.ok(emprestimo);
+        return ResponseEntity.ok(emprestimoRealizado);
     }
 
     @GetMapping
     public ResponseEntity<List<Emprestimo>> buscarEmprestimo() {
-        List<Emprestimo> emprestimos = this.emprestimoRepository.findAll();
+        List<Emprestimo> emprestimos = emprestimoService.buscarEmprestimos();
+        
         return ResponseEntity.ok(emprestimos);
     }
 
