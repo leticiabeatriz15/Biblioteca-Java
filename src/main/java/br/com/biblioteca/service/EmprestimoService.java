@@ -30,7 +30,6 @@ public class EmprestimoService {
         if (!usuarioRepository.existsById(emprestimo.getUsuario().getId())){
             throw new RuntimeException("Usuário não encontrado!");
         }
-       
 
         Livro livro = livroRepository.findById(emprestimo.getLivro().getId()).orElseThrow(() -> new RuntimeException("Livro não encontrado!"));
 
@@ -48,14 +47,11 @@ public class EmprestimoService {
     
     }
 
-
     public List<Emprestimo> buscarEmprestimos() {
         return emprestimoRepository.findAll();
     }
 
-
-    // TODO: Implementar método para devolver livro
-    // TODO: Implementar método para buscar empréstimos por usuário
-    
-    
+    // public List<Emprestimo> devolucaEmprestimo(){
+        
+    // }
 }

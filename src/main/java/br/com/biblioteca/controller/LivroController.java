@@ -72,6 +72,15 @@ public class LivroController {
         return ResponseEntity.ok(livro);
     }
 
+    @PutMapping("/atualiza/{id}")
+    public ResponseEntity<Livro> atualizaStatus(@PathVariable Long id){ 
+
+        Livro livroAtualizado = livroService.atualizaStatusLivro(id, livroService.buscarLivroPorId(id));
+ 
+        return ResponseEntity.ok(livroAtualizado);
+    }
+
+
     @DeleteMapping("/{id}")
 
     public ResponseEntity<String> deletarLivro(@PathVariable Long id) {

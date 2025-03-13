@@ -35,7 +35,6 @@ public class UsuarioController {
         usuarioService.adicionarUsuario(usuario);
 
         return ResponseEntity.ok(usuario);
-
     }
 
     // selação de usuario
@@ -66,7 +65,6 @@ public class UsuarioController {
 
         Usuario usuario = usuarioService.atualizaUsuario(id, usuarioAtualizado);
 
-
         return ResponseEntity.ok(usuario);
 
     }
@@ -80,10 +78,7 @@ public class UsuarioController {
         usuarioService.deletarUsuario(id);
 
         return ResponseEntity.ok("Usuario deletado com sucesso");
-       
 
     } 
-
-
 
 }
