@@ -1,22 +1,20 @@
 package br.com.biblioteca.controller;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import br.com.biblioteca.BibliotecaApplication;
 import br.com.biblioteca.domain.emprestimo.Emprestimo;
 import br.com.biblioteca.domain.emprestimo.EmprestimoRepository;
 import br.com.biblioteca.domain.livro.LivroRepository;
 import br.com.biblioteca.service.EmprestimoService;
-import jakarta.validation.Valid;
-
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 
 @RestController
 @RequestMapping("/emprestimos")
@@ -41,10 +39,10 @@ public class EmprestimoController {
         this.livroRepository = livroRepository;
     }
 
-    @PostMapping
-    public ResponseEntity<Emprestimo> criarEmprestimo(@RequestBody @Valid Emprestimo emprestimo){
+    @PostMapping("/{idUsuario}/{idLivro}")
+    public ResponseEntity<Emprestimo> criarEmprestimo(@PathVariable Long idUsuario, @PathVariable Long idLivro){
 
-        Emprestimo emprestimoRealizado = emprestimoService.registrarEmprestimo(emprestimo);
+        Emprestimo emprestimoRealizado = emprestimoService.registrarEmprestimo(idUsuario, idLivro);
 
         return ResponseEntity.ok(emprestimoRealizado);
     }
