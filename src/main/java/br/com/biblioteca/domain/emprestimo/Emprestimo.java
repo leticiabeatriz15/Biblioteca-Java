@@ -4,6 +4,7 @@ import java.time.LocalDate;
 
 import br.com.biblioteca.domain.livro.Livro;
 import br.com.biblioteca.domain.usuario.Usuario;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -15,7 +16,11 @@ public class Emprestimo {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
+
+    @Column(nullable = false)
     private LocalDate dataEmprestimo;
+
+    @Column(nullable=false)
     private LocalDate dataDevolucao;
 
     @ManyToOne
@@ -28,11 +33,12 @@ public class Emprestimo {
         
     }
 
-    public Emprestimo(EmprestimoDto emprestimoDto) {
-        this.dataEmprestimo = emprestimoDto.dataEmprestimo();
-        this.dataDevolucao = emprestimoDto.dataDevolucao();
-        this.usuario = emprestimoDto.usuario();
-        this.livro = emprestimoDto.livro();
+    public Emprestimo(Usuario usuario, Livro livro, LocalDate dataEmprestimo, LocalDate dataDevolucao) {
+        this.usuario = usuario;
+        this.livro = livro;
+        this.dataEmprestimo = dataEmprestimo;
+        this.dataDevolucao = dataDevolucao;
+      
     }
 
     public Emprestimo(Usuario usuario, Livro livro, Long id, LocalDate dataEmprestimo, LocalDate dataDevolucao) {
