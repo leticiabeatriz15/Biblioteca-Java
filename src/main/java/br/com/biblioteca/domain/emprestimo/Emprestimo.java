@@ -48,6 +48,10 @@ public class Emprestimo {
         this.dataDevolucao = dataDevolucao;
     }
 
+    public Emprestimo(Usuario usuario) {
+        this.usuario = usuario;
+    }
+
     public Long getId() {
         return id;
     }

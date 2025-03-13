@@ -6,7 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
-
+import br.com.biblioteca.BibliotecaApplication;
 import br.com.biblioteca.domain.emprestimo.Emprestimo;
 import br.com.biblioteca.domain.emprestimo.EmprestimoRepository;
 import br.com.biblioteca.domain.livro.Livro;
@@ -16,6 +16,8 @@ import br.com.biblioteca.domain.usuario.UsuarioRepository;
 
 @Service
 public class EmprestimoService {
+
+    private final BibliotecaApplication bibliotecaApplication;
     
     @Autowired
     private EmprestimoRepository emprestimoRepository;
@@ -25,6 +27,10 @@ public class EmprestimoService {
 
     @Autowired
     private LivroRepository livroRepository;
+
+    EmprestimoService(BibliotecaApplication bibliotecaApplication) {
+        this.bibliotecaApplication = bibliotecaApplication;
+    }
 
     public Emprestimo registrarEmprestimo(@PathVariable Long idUsuario, @PathVariable Long idLivro) {
       
@@ -49,7 +55,9 @@ public class EmprestimoService {
         return emprestimoRepository.findAll();
     }
 
-    // public List<Emprestimo> devolucaEmprestimo(){
+    public List<Emprestimo> buscarEmprestimoPorIdUsuario(@PathVariable Long idUsuario){
         
-    // }
+        return emprestimoRepository.findByUsuarioId(idUsuario);
+
+    }
 }
