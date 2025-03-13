@@ -2,10 +2,8 @@ package br.com.biblioteca.controller;
 
 import br.com.biblioteca.BibliotecaApplication;
 import br.com.biblioteca.domain.emprestimo.Emprestimo;
-import br.com.biblioteca.domain.emprestimo.EmprestimoDto;
 import br.com.biblioteca.domain.emprestimo.EmprestimoRepository;
 import br.com.biblioteca.domain.livro.Livro;
-import br.com.biblioteca.domain.livro.LivroDto;
 import br.com.biblioteca.domain.livro.LivroRepository;
 import br.com.biblioteca.service.EmprestimoService;
 import jakarta.validation.Valid;
@@ -71,24 +69,6 @@ public class EmprestimoController {
             return ResponseEntity.notFound().build();
         }
 
-        return ResponseEntity.ok(emprestimo);
-    }
-
-    @PutMapping
-
-    public ResponseEntity<Emprestimo> atualizarLivro(@PathVariable Long id, @RequestBody EmprestimoDto dados){
-        Emprestimo emprestimo = this.emprestimoRepository.findById(id).orElse(null);
-
-        if (emprestimo == null) {
-            return ResponseEntity.notFound().build();
-        }
-
-        emprestimo.setLivro(dados.livro());
-        emprestimo.setUsuario(dados.usuario());
-        emprestimo.setDataEmprestimo(dados.dataEmprestimo());
-        emprestimo.setDataEmprestimo(dados.dataDevolucao());
-
-        this.emprestimoRepository.save(emprestimo);
         return ResponseEntity.ok(emprestimo);
     }
 
