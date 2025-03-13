@@ -14,8 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.biblioteca.domain.usuario.Usuario;
-import br.com.biblioteca.domain.usuario.UsuarioDto;
-import br.com.biblioteca.domain.usuario.UsuarioRepository;
+import br.com.biblioteca.service.UsuarioService;
 import jakarta.validation.Valid;
 
 @RestController
@@ -23,7 +22,7 @@ import jakarta.validation.Valid;
 
 public class UsuarioController {
     @Autowired
-    private UsuarioRepository usuarioRepository;
+    private UsuarioService usuarioService;
 
     // CRUD
 
@@ -31,9 +30,9 @@ public class UsuarioController {
 
     @PostMapping
 
-    public ResponseEntity<Usuario> criarUsuario(@RequestBody @Valid UsuarioDto dados) {
-        Usuario usuario = new Usuario(dados);
-        usuarioRepository.save(usuario);
+    public ResponseEntity<Usuario> criarUsuario(@RequestBody @Valid  Usuario usuario) {
+
+        usuarioService.adicionarUsuario(usuario);
 
         return ResponseEntity.ok(usuario);
 
@@ -45,7 +44,7 @@ public class UsuarioController {
 
     public ResponseEntity<List<Usuario>> buscarUsuarios() {
 
-        List<Usuario> usuarios = this.usuarioRepository.findAll();
+        List<Usuario> usuarios = usuarioService.buscarTodosUsuarios();
 
         return ResponseEntity.ok(usuarios);
     }
@@ -54,13 +53,7 @@ public class UsuarioController {
 
     public ResponseEntity<Usuario> buscarUsuarioPorId(@PathVariable Long id) {
 
-        Usuario usuario = this.usuarioRepository.findById(id).orElse(null);
-
-        if (usuario == null) {
-            return ResponseEntity.notFound().build();
-
-        }
-
+        Usuario usuario = usuarioService.buscarUsuarioPorId(id);
         return ResponseEntity.ok(usuario);
 
     }
@@ -69,19 +62,10 @@ public class UsuarioController {
 
     @PutMapping("/{id}")
 
-    public ResponseEntity<Usuario> atualizarUsuario(@PathVariable Long id, @RequestBody UsuarioDto dados){
+    public ResponseEntity<Usuario> atualizarUsuario(@PathVariable Long id, @RequestBody Usuario usuarioAtualizado){
 
-        Usuario usuario = this.usuarioRepository.findById(id).orElse(null);
+        Usuario usuario = usuarioService.atualizaUsuario(id, usuarioAtualizado);
 
-        if (usuario == null) {
-            return ResponseEntity.notFound().build();
-
-        }
-
-        usuario.setNome(dados.nome());
-        usuario.setEmail(dados.email());
-
-        this.usuarioRepository.save(usuario);
 
         return ResponseEntity.ok(usuario);
 
@@ -93,15 +77,10 @@ public class UsuarioController {
 
     public ResponseEntity<String> deletarUsuario(@PathVariable Long id){
 
-        Usuario usuario = this.usuarioRepository.findById(id).orElse(null);
+        usuarioService.deletarUsuario(id);
 
-        if (usuario == null) {
-            return ResponseEntity.notFound().build();
-
-        }
-
-        this.usuarioRepository.delete(usuario);
-        return ResponseEntity.ok("Usuário" + " " + usuario.getNome() + " " + "deletado com sucesso! ");
+        return ResponseEntity.ok("Usuario deletado com sucesso");
+       
 
     } 
 
