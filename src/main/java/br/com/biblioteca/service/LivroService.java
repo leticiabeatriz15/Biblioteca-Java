@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import br.com.biblioteca.BibliotecaApplication;
 import br.com.biblioteca.domain.livro.Livro;
 import br.com.biblioteca.domain.livro.LivroRepository;
@@ -27,25 +28,25 @@ public class LivroService {
 
     public void validarLivro(Livro livro){
         if (livro.getTitulo() == null || livro.getTitulo().isEmpty()) {
-            throw new RuntimeException("O título do livro é obrigatório");
+            System.out.println("O titulo do livro é obrigatório");
         }
 
         if (livro.getAutor() == null || livro.getAutor().isEmpty()) {
-            throw new RuntimeException("O autor do livro é obrigatório");
+            System.out.println("O autor do livro é obrigatório");
         }
 
         if (livro.getIsbn() == null || livro.getIsbn().isEmpty()) {
-            throw new RuntimeException("O isbn do livro é obrigatório");
+            System.out.println("O isbn do livro é obrigatório");
         }
 
         if (livro.getStatus() == null || livro.getStatus().isEmpty()) {
-            throw new RuntimeException("O status do livro é obrigatório");
+            System.out.println("O status do livro é obrigatório");
         }
 
     }
 
     public Livro buscarLivroPorId(Long id) {
-        Livro livro = this.livroRepository.findById(id).orElseThrow(() -> new RuntimeException("Livro não encontrado"));
+        Livro livro = this.livroRepository.findById(id).orElse(null);
 
         return livro;
     }
@@ -57,11 +58,11 @@ public class LivroService {
     public Livro atualizarLivro(Long id, Livro livroAtualizado){
 
         if (id == null){
-            throw new RuntimeException("Id inválido");
+            System.out.println("ID inválido");
         }
         validarLivro(livroAtualizado);
 
-        Livro livroAtual = livroRepository.findById(id).orElseThrow(() -> new RuntimeException("Livro não encontrado!"));
+        Livro livroAtual = livroRepository.findById(id).orElse(null);
 
         livroAtual.setTitulo(livroAtualizado.getTitulo());
         livroAtual.setAutor(livroAtualizado.getAutor());
@@ -74,27 +75,10 @@ public class LivroService {
 
     }
 
-    public Livro atualizaStatusLivro(Long id, Livro livro){
-        if (id == null){
-            throw new RuntimeException("Id inválido");
-        }
-        validarLivro(livro);
-
-        Livro livroAtual = livroRepository.findById(id).orElseThrow(() -> new RuntimeException("Livro não encontrado!"));
-
-        if("Emprestado".equals(livroAtual.getStatus())){
-            livroAtual.setStatus("Disponivel");
-        }else{
-            livroAtual.setStatus("Emprestado");
-        }
-
-        return livroRepository.save(livroAtual);
-    }
-
     public void deletarLivro(Long id){
       
         if (!livroRepository.existsById(id)){
-            throw new RuntimeException("Livro não encontrado");
+            System.out.println("Livro não encontrado");
         }
 
         livroRepository.deleteById(id);

@@ -19,7 +19,6 @@ import br.com.biblioteca.domain.emprestimo.EmprestimoRepository;
 import br.com.biblioteca.domain.livro.LivroRepository;
 import br.com.biblioteca.service.EmprestimoService;
 import br.com.biblioteca.service.LivroService;
-import jakarta.websocket.server.PathParam;
 
 @RestController
 @RequestMapping("/emprestimos")
@@ -69,21 +68,13 @@ public class EmprestimoController {
          return ResponseEntity.ok(emprestimos);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Emprestimo> buscarEmprestimoPorId(@PathVariable Long id){
-        Emprestimo emprestimo = this.emprestimoRepository.findById(id).orElse(null);
 
-        if(emprestimo == null){
-            return ResponseEntity.notFound().build();
-        }
+    @PutMapping("/{idLivro}")
+    public ResponseEntity<String> devolverLivroEmprestimo(@PathVariable Long idLivro){ 
 
-        return ResponseEntity.ok(emprestimo);
-    }
+        emprestimoService.devolverLivro(idLivro);
 
-
-    @PutMapping("/{idUsuario}/{idLivro}")
-    public ResponseEntity<Emprestimo> devolverLivroEmprestimo(@PathVariable Long idUsuario, @PathVariable Long idLivro){ 
-        
+        return ResponseEntity.ok("Devolvido");
 
     }
 }

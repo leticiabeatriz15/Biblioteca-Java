@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
+
 import br.com.biblioteca.BibliotecaApplication;
 import br.com.biblioteca.domain.emprestimo.Emprestimo;
 import br.com.biblioteca.domain.emprestimo.EmprestimoRepository;
@@ -34,12 +35,11 @@ public class EmprestimoService {
 
     public Emprestimo registrarEmprestimo(@PathVariable Long idUsuario, @PathVariable Long idLivro) {
       
-        Usuario usuario = usuarioRepository.findById(idUsuario).orElseThrow(() -> new RuntimeException("Usuário não encontrado!"));
-
-        Livro livro = livroRepository.findById(idLivro).orElseThrow(() -> new RuntimeException("Livro não encontrado!"));
+        Usuario usuario = usuarioRepository.findById(idUsuario).orElse(null);
+        Livro livro = livroRepository.findById(idLivro).orElse(null);
 
         if ("Emprestado".equals(livro.getStatus())){
-            throw new RuntimeException("Livro não disponível para empréstimo!");
+            System.out.println( "Livro não disponível para empréstimo!");
         }
 
         Emprestimo emprestimo = new Emprestimo(usuario, livro, LocalDate.now(), LocalDate.now().plusDays(7));
@@ -60,4 +60,16 @@ public class EmprestimoService {
         return emprestimoRepository.findByUsuarioId(idUsuario);
 
     }
+
+   
+
+    public void devolverLivro(@PathVariable Long idLivro) {
+
+        Emprestimo emprestimo = emprestimoRepository.findByLivroId(idLivro);
+
+        emprestimo.getLivro().setStatus("Disponivel");
+        livroRepository.save(emprestimo.getLivro());
+
+    }
+
 }

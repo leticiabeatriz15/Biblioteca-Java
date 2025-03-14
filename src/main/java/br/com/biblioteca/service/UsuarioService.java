@@ -23,17 +23,17 @@ public class UsuarioService {
 
     public void validarUsuario(Usuario usuario) {
         if (usuario.getNome() == null || usuario.getNome().isEmpty()) {
-            throw new RuntimeException("Nome do usuário não pode ser vazio");
+            System.out.println("Nome do usuário não pode estar vazio");
         }
 
         if (usuario.getEmail() == null || usuario.getEmail().isEmpty()) {
-            throw new RuntimeException("Email do usuário não pode ser vazio");
+            System.out.println("Email do usuário não pode estar vazio");
         }
     }
 
     public Usuario buscarUsuarioPorId(Long id) {
         Usuario usuario = usuarioRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Usuário não encontrado!"));
+                .orElse(null);
 
         return usuario;
 
@@ -45,12 +45,12 @@ public class UsuarioService {
 
     public Usuario atualizaUsuario(Long id, Usuario usuarioAtualizado){
         if (id == null){
-            throw new RuntimeException("Id inválido");
+            System.out.println("ID inválido");
         }
 
         validarUsuario(usuarioAtualizado);
 
-        Usuario usuarioAtual = usuarioRepository.findById(id).orElseThrow(() -> new RuntimeException("Usuário não encontrado!"));
+        Usuario usuarioAtual = usuarioRepository.findById(id).orElse(null);
 
         usuarioAtual.setNome(usuarioAtualizado.getNome());
         usuarioAtual.setEmail(usuarioAtualizado.getEmail());
