@@ -17,8 +17,10 @@ import br.com.biblioteca.BibliotecaApplication;
 import br.com.biblioteca.domain.emprestimo.Emprestimo;
 import br.com.biblioteca.domain.emprestimo.EmprestimoRepository;
 import br.com.biblioteca.domain.livro.LivroRepository;
+import br.com.biblioteca.domain.usuario.Usuario;
 import br.com.biblioteca.service.EmprestimoService;
 import br.com.biblioteca.service.LivroService;
+import jakarta.validation.constraints.Email;
 
 @RestController
 @RequestMapping("/emprestimos")
@@ -61,6 +63,11 @@ public class EmprestimoController {
         if(idUsuario != null){
             emprestimos = emprestimoService.buscarEmprestimoPorIdUsuario(idUsuario);
         }else{
+
+
+
+
+            
 
             emprestimos = emprestimoService.buscarEmprestimos();
         }

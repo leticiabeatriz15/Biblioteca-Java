@@ -1,0 +1,14 @@
+br/com/biblioteca/domain/emprestimo/Emprestimo.class
+br/com/biblioteca/domain/livro/Livro.class
+br/com/biblioteca/domain/emprestimo/EmprestimoRepository.class
+br/com/biblioteca/service/LivroService.class
+br/com/biblioteca/service/EmailService.class
+br/com/biblioteca/domain/usuario/UsuarioRepository.class
+br/com/biblioteca/service/UsuarioService.class
+br/com/biblioteca/controller/EmprestimoController.class
+br/com/biblioteca/service/EmprestimoService.class
+br/com/biblioteca/domain/usuario/Usuario.class
+br/com/biblioteca/controller/LivroController.class
+br/com/biblioteca/domain/livro/LivroRepository.class
+br/com/biblioteca/BibliotecaApplication.class
+br/com/biblioteca/controller/UsuarioController.class
