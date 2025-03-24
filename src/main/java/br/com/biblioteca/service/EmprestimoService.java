@@ -29,6 +29,9 @@ public class EmprestimoService {
     @Autowired
     private LivroRepository livroRepository;
 
+    @Autowired
+    private EmailService emailService;
+
     EmprestimoService(BibliotecaApplication bibliotecaApplication) {
         this.bibliotecaApplication = bibliotecaApplication;
     }
@@ -40,13 +43,16 @@ public class EmprestimoService {
 
         if ("Emprestado".equals(livro.getStatus())){
             System.out.println( "Livro não disponível para empréstimo!");
+            return null;
         }
 
         Emprestimo emprestimo = new Emprestimo(usuario, livro, LocalDate.now(), LocalDate.now().plusDays(7));
 
         livro.setStatus("Emprestado");
         livroRepository.save(livro);
-            
+
+        emailService.enviarEmail(usuario.getEmail(), "emprestimo");
+
         return emprestimoRepository.save(emprestimo);
     
     }
@@ -61,8 +67,6 @@ public class EmprestimoService {
 
     }
 
-   
-
     public void devolverLivro(@PathVariable Long idLivro) {
 
         Emprestimo emprestimo = emprestimoRepository.findByLivroId(idLivro);
@@ -70,6 +74,7 @@ public class EmprestimoService {
         emprestimo.getLivro().setStatus("Disponivel");
         livroRepository.save(emprestimo.getLivro());
 
+        emailService.enviarEmail(emprestimo.getUsuario().getEmail(), "devolucao");
     }
 
 }

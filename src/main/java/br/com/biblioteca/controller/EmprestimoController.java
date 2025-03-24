@@ -63,12 +63,6 @@ public class EmprestimoController {
         if(idUsuario != null){
             emprestimos = emprestimoService.buscarEmprestimoPorIdUsuario(idUsuario);
         }else{
-
-
-
-
-            
-
             emprestimos = emprestimoService.buscarEmprestimos();
         }
         
